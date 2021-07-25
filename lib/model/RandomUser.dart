@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-class User {
+class RandomUser {
   final List<Result> results;
 
-  User({
+  RandomUser({
     required this.results,
   });
 
@@ -13,15 +13,16 @@ class User {
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
+  factory RandomUser.fromMap(Map<String, dynamic> map) {
+    return RandomUser(
       results: List<Result>.from(map['results']?.map((x) => Result.fromMap(x))),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source));
+  factory RandomUser.fromJson(String source) =>
+      RandomUser.fromMap(json.decode(source));
 }
 
 class Result {

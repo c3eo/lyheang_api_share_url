@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyheang_api_share_url/view/home_page.dart';
+import 'package:lyheang_api_share_url/view/root_app.dart';
 
 void main() {
   runApp(
@@ -11,7 +11,7 @@ void main() {
         primaryColor: Colors.red,
         accentColor: Colors.red,
       ),
-      home: ComplexApi(),
+      home: RootApp(),
     ),
   );
 }

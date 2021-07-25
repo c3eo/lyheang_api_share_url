@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'detail_page.dart';
+import 'package:lyheang_api_share_url/api/UserApi.dart';
+import 'package:lyheang_api_share_url/widget/UserTileWidget.dart';
 import 'package:provider/provider.dart';
-import '../model/model.dart';
-import '../provider/provider.dart';
 
-class ComplexApi extends StatelessWidget {
-  const ComplexApi({Key? key}) : super(key: key);
+class RootApp extends StatelessWidget {
+  const RootApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => DataProvider()),
+        ChangeNotifierProvider(create: (_) => UserApi()),
       ],
       child: HomePage(),
     );
@@ -29,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<DataProvider>().getUser();
+    context.read<UserApi>().getUser();
   }
 
   @override
@@ -44,8 +43,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildInfo(BuildContext context) {
-    final users = context.watch<DataProvider>().user;
-    final status = context.watch<DataProvider>().status;
+    final users = context.watch<UserApi>().user;
+    final status = context.watch<UserApi>().status;
 
     if (status == Status.loading) {
       return Center(
@@ -54,7 +53,7 @@ class _HomePageState extends State<HomePage> {
     } else if (status == Status.done) {
       return RefreshIndicator(
         onRefresh: () async {
-          await context.read<DataProvider>().getUser();
+          await context.read<UserApi>().getUser();
         },
         child: ListView.builder(
           physics: BouncingScrollPhysics(),
@@ -70,33 +69,5 @@ class _HomePageState extends State<HomePage> {
         child: Text('Something went wrong'),
       );
     }
-  }
-}
-
-class UserTileWidget extends StatelessWidget {
-  final Result user;
-  const UserTileWidget({
-    Key? key,
-    required this.user,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DetailPage(user: user),
-            ),
-          );
-        },
-        leading:
-            CircleAvatar(backgroundImage: NetworkImage(user.picture.large)),
-        title: Text('${user.name.title} ${user.name.first} ${user.name.last} '),
-        subtitle: Text('Email: ${user.email}'),
-      ),
-    );
   }
 }

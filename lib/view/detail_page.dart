@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../helper/launch_helper.dart';
 import '../helper/share_helper.dart';
 
-import '../model/model.dart';
+import '../model/RandomUser.dart';
 
 class DetailPage extends StatelessWidget {
   final Result user;
@@ -60,6 +60,7 @@ class DetailPage extends StatelessWidget {
 
   String get _longitude => user.location.coordinates.longitude;
   String get _latitude => user.location.coordinates.latitude;
+
   Row _address(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,9 +140,6 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  ///
-  //!/ -- style ---------------------------------------------------
-  ///
   TextStyle _textStyle({double fontsize = 16}) => TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.w600,
